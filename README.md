@@ -80,3 +80,4 @@ Then open http://127.0.0.1:8000/
 - **Applications** — (Employers) review & update application statuses
 - **Django Admin** — manage all data at `/admin/`
 "# hosting-job" 
+"# hosting-job" 
