@@ -141,10 +141,10 @@ def toggle_save_job(request, pk):
     obj, created = SavedJob.objects.get_or_create(user=request.user, job=job)
     if not created:
         obj.delete()
-        saved = False
+        messages.success(request, 'Job removed from saved jobs.')
     else:
-        saved = True
-    return JsonResponse({'saved': saved})
+        messages.success(request, 'Job saved successfully.')
+    return redirect('job_detail', pk=job.pk)
 
 
 # ── Post Job ────────────────────────────────────────────────
@@ -274,6 +274,9 @@ def dashboard(request):
 @employer_required
 def edit_job(request, pk):
     job  = get_object_or_404(Job, pk=pk)
+    if not request.user.is_admin and job.posted_by != request.user:
+        messages.error(request, 'You can only edit your own jobs.')
+        return redirect('job_listings')
     form = PostJobForm(request.POST or None, instance=job)  # ✅ instance= pre-fills the form
 
     if request.method == 'POST' and form.is_valid():
@@ -292,6 +295,9 @@ def edit_job(request, pk):
 @require_POST
 def delete_job(request, pk):
     job = get_object_or_404(Job, pk=pk)
+    if not request.user.is_admin and job.posted_by != request.user:
+        messages.error(request, 'You can only delete your own jobs.')
+        return redirect('job_listings')
     title = job.title
     job.delete()
     messages.success(request, f'"{title}" has been deleted.')
