@@ -9,9 +9,9 @@ services:
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
-        value: "django-insecure-render-deployment-key"
-      - key: ALLOWED_HOSTS
-        value: "*.onrender.com,localhost"
+        value: "django-insecure-j7%9$d*7@x#q1a!z_5e8w$q+2a#h!y&d8#q)t@x_c8p2e&q+c"
+      - key: RENDER
+        value: "true"
       - key: DATABASE_URL
         fromDatabase:
           name: neon

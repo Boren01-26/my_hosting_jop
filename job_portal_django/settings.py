@@ -61,6 +61,22 @@ DATABASES = {
     )
 }
 
+# CSRF and Security Settings for Production
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://my-hosting-jop.onrender.com',
+    'http://localhost:8000',
+]
+
+if os.environ.get('RENDER'):
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
